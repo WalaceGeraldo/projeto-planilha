@@ -36,14 +36,22 @@ echo "\n3. Informações do Sistema:\n";
 echo "PHP Version: " . phpversion() . "\n";
 echo "Server Software: " . $_SERVER['SERVER_SOFTWARE'] . "\n";
 
+echo "\n4. Lista Completa de Chaves de Ambiente (Valores Ocultos):\n";
+$all_keys = array_merge(array_keys($_ENV), array_keys(getenv()), array_keys($_SERVER));
+$all_keys = array_unique($all_keys);
+sort($all_keys);
+
+foreach ($all_keys as $key) {
+    if (strpos($key, 'DB_') === 0 || strpos($key, 'RAILWAY') === 0 || $key === 'DATABASE_URL') {
+        echo "[$key] => (Presente)\n";
+    }
+}
+
 echo "\n=== CONCLUSÃO ===\n";
 if (defined('DB_HOST') && DB_HOST === 'localhost') {
-    echo "❌ PROBLEMA DETECTADO: O sistema está tentando conectar em 'localhost'.\n";
-    echo "Isso significa que as variáveis de ambiente NÃO estão configuradas no Railway ou o PHP não consegue lê-las.\n";
-    echo "SOLUÇÃO: Vá em Settings > Variables no Railway e adicione DB_HOST, DB_USER, etc.\n";
-} elseif (defined('DB_HOST') && DB_HOST !== 'localhost') {
-    echo "✅ CONFIGURAÇÃO OK: O Host parece estar apontando para um servidor externo (" . DB_HOST . ").\n";
-    echo "Se ainda der erro, verifique se o Host está correto e se o banco permite conexões externas.\n";
+    echo "❌ FALHA: O sistema ainda acha que é localhost.\n";
+    echo "Se você adicionou a variável, o Railway pode não ter feito o Redeploy ainda.\n";
+    echo "Tente clicar em 'Deployments' > 'Trigger Redeploy' no Railway.\n";
 } else {
-    echo "⚠️ SITUAÇÃO INDEFINIDA.\n";
+    echo "✅ SUCESSO: Conectado em " . DB_HOST . "\n";
 }
