@@ -19,7 +19,11 @@ require_once __DIR__ . '/includes/config.php';
 $action = $_GET['action'] ?? '';
 $input = json_decode(file_get_contents('php://input'), true) ?? [];
 
-$controller = new AuthController();
-$response = $controller->handleRequest($action, $input);
-
-echo json_encode($response);
+try {
+    $controller = new AuthController();
+    $response = $controller->handleRequest($action, $input);
+    echo json_encode($response);
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
+}
