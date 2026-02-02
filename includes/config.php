@@ -14,10 +14,10 @@ try {
     // Em produção, as variáveis podem vir do ambiente do servidor
 }
 
-define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
-define('DB_PORT', $_ENV['DB_PORT'] ?? '5432');
-define('DB_NAME', $_ENV['DB_NAME'] ?? 'projeto_planilha');
-define('DB_USER', $_ENV['DB_USER'] ?? 'postgres');
-define('DB_PASS', $_ENV['DB_PASS'] ?? '');
+define('DB_HOST', $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?: 'localhost');
+define('DB_PORT', $_ENV['DB_PORT'] ?? getenv('DB_PORT') ?: '5432');
+define('DB_NAME', $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?: 'projeto_planilha');
+define('DB_USER', $_ENV['DB_USER'] ?? getenv('DB_USER') ?: 'postgres');
+define('DB_PASS', $_ENV['DB_PASS'] ?? getenv('DB_PASS') ?: '');
 
 ?>
