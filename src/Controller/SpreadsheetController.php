@@ -82,7 +82,7 @@ class SpreadsheetController {
         if (!$id) throw new Exception("ID não fornecido.");
         
         $this->repo->saveData($id, $dados);
-        $this->repo->logHistory($id, $this->userId, "Salvou: $msg");
+        $this->repo->logHistory($id, $this->userId, "Salvou Alterações", $msg);
         
         return ['success' => true];
     }
@@ -96,7 +96,7 @@ class SpreadsheetController {
         if (!$id || !$newName) throw new Exception("Dados inválidos.");
         
         if ($this->repo->rename($id, $newName)) {
-            $this->repo->logHistory($id, $this->userId, "Renomeou para '$newName'");
+            $this->repo->logHistory($id, $this->userId, "Renomeou Planilha", "Novo nome: $newName");
             return ['success' => true];
         }
         throw new Exception("Erro ao renomear.");
