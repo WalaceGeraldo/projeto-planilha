@@ -28,6 +28,7 @@ echo "DB_PASS: " . (defined('DB_PASS') ? (empty(DB_PASS) ? '(Vazio)' : '****** (
 
 echo "\n2. Teste direto das Variáveis (Origem):\n";
 echo "getenv('DB_HOST'): " . (getenv('DB_HOST') ?: 'False/Empty') . "\n";
+echo "getenv('DATABASE_URL'): " . (getenv('DATABASE_URL') ? '✅ DEFINIDA (Começa com ' . substr(getenv('DATABASE_URL'), 0, 10) . '...)' : '❌ NÃO DEFINIDA') . "\n";
 echo "\$_ENV['DB_HOST']: " . ($_ENV['DB_HOST'] ?? 'Null/Empty') . "\n";
 echo "\$_SERVER['DB_HOST']: " . ($_SERVER['DB_HOST'] ?? 'Null/Empty') . "\n";
 
