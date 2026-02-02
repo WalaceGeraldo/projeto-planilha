@@ -8,7 +8,7 @@ session_start();
 
 // Carregar variáveis de ambiente
 $dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+$dotenv->safeLoad();
 
 // Definir headers e output charset
 header('Content-Type: application/json; charset=utf-8');
