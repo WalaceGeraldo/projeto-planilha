@@ -35,18 +35,16 @@ class UserRepository {
             throw new Exception("Usuário já existe.");
         }
 
-        $newId = uniqid();
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $this->db->prepare("INSERT INTO users (id, username, password, role) VALUES (:id, :username, :password, :role)");
+        $stmt = $this->db->prepare("INSERT INTO users (username, password, role) VALUES (:username, :password, :role)");
         $stmt->execute([
-            'id' => $newId,
             'username' => $username,
             'password' => $hashedPassword,
             'role' => $role
         ]);
 
-        return $newId;
+        return $this->db->lastInsertId();
     }
 
     public function update($id, $username, $password = null, $role = 'editor') {
