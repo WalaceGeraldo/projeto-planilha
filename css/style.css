@@ -1,0 +1,120 @@
+/* =========================================
+   Global Styles
+   ========================================= */
+
+/* Auth Pages (Login / Register) */
+body.auth-page {
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* =========================================
+   Dashboard Styles
+   ========================================= */
+.search-input {
+    max-width: 300px;
+}
+
+.edit-mode-msg {
+    display: none;
+}
+
+/* =========================================
+   Editor Styles
+   ========================================= */
+.table-container { 
+    max-height: 500px; 
+    overflow: auto; 
+    border: 1px solid #ddd; 
+    background: #fff; 
+}
+
+/* Estilizacao das Abas */
+.nav-tabs { 
+    border-bottom: 2px solid #0d6efd; 
+}
+
+.nav-link { 
+    background-color: #f1f3f5; 
+    color: #495057; 
+    margin-right: 4px;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.2s;
+}
+
+.nav-link:hover {
+    background-color: #e9ecef;
+    color: #000;
+}
+
+.nav-link.active { 
+    background-color: #0d6efd; 
+    color: white; 
+    border-color: #0d6efd;
+    font-weight: bold;
+}
+
+#loading { 
+    display: none; 
+    font-weight: bold; 
+    color: #0d6efd; 
+}
+
+/* Tabela Editor */
+th { 
+    position: relative; 
+    min-width: 50px; 
+    background: #f8f9fa; 
+}
+
+.resizer {
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    width: 5px; 
+    cursor: col-resize;
+    user-select: none; 
+    height: 100%; 
+    z-index: 10;
+}
+
+.resizer:hover, .resizing { 
+    background-color: #0d6efd; 
+    border-right: 2px solid #0d6efd; 
+}
+
+.selected-cell {
+    border: 2px solid #0d6efd !important;
+    background-color: rgba(13, 110, 253, 0.1) !important;
+}
+
+.cell-input {
+    cursor: cell; /* Mostra cruz branca estilo Excel */
+    user-select: none;
+}
+
+.cell-input.editing {
+    cursor: text;
+    user-select: text;
+    background-color: #fff !important;
+    box-shadow: inset 0 0 0 2px #0d6efd;
+}
+
+.search-input-small {
+    max-width: 250px;
+}
+
+.actions-container {
+    display: none;
+    margin-top: 1rem;
+}
