@@ -9,9 +9,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && docker-php-ext-install pdo pdo_pgsql pgsql zip gd
 
-# Fix potential Apache MPM conflict: Nuke all existing MPMs then enable prefork
-RUN rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
-    && a2enmod mpm_prefork
+
 
 # Habilitar mod_rewrite do Apache para URLs amigáveis (se necessário)
 RUN a2enmod rewrite
@@ -32,5 +30,11 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
+# Fix potential Apache MPM conflict: Nuke all existing MPMs then enable prefork
+# Running this at the END to ensure no other package install re-enables event/worker
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
+    && a2enmod mpm_prefork
+
 # Expor porta 80
 EXPOSE 80
+
