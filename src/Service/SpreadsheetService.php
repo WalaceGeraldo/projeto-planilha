@@ -64,7 +64,7 @@ class SpreadsheetService {
         
         $id = $this->repo->create($originalName, $userId);
         $this->repo->saveData($id, $importedData);
-        $this->repo->logHistory($id, $userId, "Importou arquivo '$originalName'");
+        $this->repo->logHistory($id, $userId, "Importação via Upload", "Arquivo original: $originalName");
         
         @unlink($tempFile);
         return $id;

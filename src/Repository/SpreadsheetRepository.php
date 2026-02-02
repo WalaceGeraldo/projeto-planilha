@@ -71,12 +71,13 @@ class SpreadsheetRepository {
         return $stmt->rowCount() > 0;
     }
 
-    public function logHistory($spreadsheetId, $userId, $actionDescription) {
-        $stmt = $this->db->prepare("INSERT INTO spreadsheet_history (spreadsheet_id, user_id, action, timestamp) VALUES (:sid, :uid, :action, NOW())");
+    public function logHistory($spreadsheetId, $userId, $action, $details = null) {
+        $stmt = $this->db->prepare("INSERT INTO spreadsheet_history (spreadsheet_id, user_id, action, details, timestamp) VALUES (:sid, :uid, :action, :details, NOW())");
         $stmt->execute([
             'sid' => $spreadsheetId,
             'uid' => $userId,
-            'action' => $actionDescription
+            'action' => substr($action, 0, 50), // Garantir que não estoure o limite
+            'details' => $details
         ]);
     }
 
