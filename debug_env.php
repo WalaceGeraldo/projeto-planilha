@@ -42,7 +42,8 @@ $all_keys = array_unique($all_keys);
 sort($all_keys);
 
 foreach ($all_keys as $key) {
-    if (strpos($key, 'DB_') === 0 || strpos($key, 'RAILWAY') === 0 || $key === 'DATABASE_URL') {
+    // Filtro mais amplo para encontrar qualquer variável de banco
+    if (preg_match('/(DB|POSTGRES|PG|RAILWAY|URL|HOST|USER|PASS|NAME)/i', $key)) {
         echo "[$key] => (Presente)\n";
     }
 }
