@@ -52,8 +52,15 @@ if ($databaseUrl) {
     define('DB_NAME', ltrim($parts['path'] ?? 'projeto_planilha', '/'));
     define('DB_USER', $parts['user'] ?? 'postgres');
     define('DB_PASS', $parts['pass'] ?? '');
+} elseif (get_env_var('PGHOST')) {
+    // Fallback: Variáveis nativas do Postgres (PGHOST, PGUSER, etc)
+    define('DB_HOST', get_env_var('PGHOST'));
+    define('DB_PORT', get_env_var('PGPORT', '5432'));
+    define('DB_NAME', get_env_var('PGDATABASE', 'railway'));
+    define('DB_USER', get_env_var('PGUSER', 'postgres'));
+    define('DB_PASS', get_env_var('PGPASSWORD', ''));
 } else {
-    // Fallback para variáveis individuais
+    // Fallback Final: Variáveis manuais ou Localhost
     define('DB_HOST', get_env_var('DB_HOST', 'localhost'));
     define('DB_PORT', get_env_var('DB_PORT', '5432'));
     define('DB_NAME', get_env_var('DB_NAME', 'projeto_planilha'));
