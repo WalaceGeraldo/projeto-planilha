@@ -29,8 +29,19 @@ function get_env_var($key, $default = null) {
     return $default;
 }
 
-// Tentar detectar DATABASE_URL (Padrão Railway/Heroku)
+// Tentar detectar DATABASE_URL (ou qualquer variável que pareça uma URL de banco)
 $databaseUrl = get_env_var('DATABASE_URL');
+
+// Se não achou pelo nome padrão, procura por qualquer variável que pareça uma conexão Postgres
+if (!$databaseUrl) {
+    $allVars = array_merge($_ENV, $_SERVER, getenv());
+    foreach ($allVars as $key => $value) {
+        if (is_string($value) && strpos($value, 'postgres://') === 0) {
+            $databaseUrl = $value;
+            break;
+        }
+    }
+}
 
 if ($databaseUrl) {
     // Parser da URL de conexão: postgres://user:pass@host:port/dbname
