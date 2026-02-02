@@ -9,8 +9,10 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && docker-php-ext-install pdo pdo_pgsql pgsql zip gd
 
-# Fix potential Apache MPM conflict (ensure only prefork is enabled for PHP)
-RUN a2dismod mpm_event mpm_worker || true && a2enmod mpm_prefork
+# Fix potential Apache MPM conflict by deleting conflicting config files directly
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.load /etc/apache2/mods-enabled/mpm_event.conf \
+    && rm -f /etc/apache2/mods-enabled/mpm_worker.load /etc/apache2/mods-enabled/mpm_worker.conf \
+    && a2enmod mpm_prefork
 
 # Habilitar mod_rewrite do Apache para URLs amigáveis (se necessário)
 RUN a2enmod rewrite
