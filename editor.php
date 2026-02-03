@@ -1,6 +1,9 @@
 <?php
 session_start();
-require 'db.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/includes/config.php';
+
+use App\Repository\SpreadsheetRepository;
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -13,7 +16,9 @@ if (!$id) {
     exit;
 }
 
-$meta = find_spreadsheet_meta($id);
+$repo = new SpreadsheetRepository();
+$meta = $repo->find($id);
+
 if (!$meta) {
     die("Planilha não encontrada.");
 }
