@@ -88,7 +88,7 @@ function confirmarRenomearAba() {
 
     const abas = Object.keys(cacheGlobal);
     if (abas.includes(novoNome)) {
-        alert("Já existe uma aba com este nome.");
+        Swal.fire('Atenção', "Já existe uma aba com este nome.", 'warning');
         return;
     }
 
@@ -126,11 +126,11 @@ function adicionarAba() {
 
 function confirmarNovaAba() {
     const nome = document.getElementById('nomeNovaAba').value.trim();
-    if (!nome) return alert("Digite um nome para a aba.");
+    if (!nome) return Swal.fire('Atenção', "Digite um nome para a aba.", 'warning');
 
     const abasExistentes = Object.keys(cacheGlobal);
     if (abasExistentes.includes(nome)) {
-        alert("Já existe uma aba com este nome.");
+        Swal.fire('Atenção', "Já existe uma aba com este nome.", 'warning');
         return;
     }
 
@@ -410,7 +410,7 @@ function updateSelectionVisuals() {
 }
 
 function aplicarEstilo(tipo, valor = null) {
-    if (!selectionStart) return alert("Selecione células primeiro.");
+    if (!selectionStart) return Swal.fire('Atenção', "Selecione células primeiro.", 'info');
 
     saveState();
 
@@ -451,7 +451,7 @@ function aplicarEstilo(tipo, valor = null) {
 }
 
 function mesclarCelulas() {
-    if (!selectionStart || !selectionEnd) return alert("Selecione células para mesclar.");
+    if (!selectionStart || !selectionEnd) return Swal.fire('Atenção', "Selecione células para mesclar.", 'info');
 
     saveState();
 
@@ -487,10 +487,10 @@ function mesclarCelulas() {
         if (masterData.merge) {
             delete masterData.merge;
             cacheGlobal[abaAtiva][masterR][masterC] = masterData;
-            alert("Para desmesclar, selecione a célula mesclada e clique novamente (Lógica WIP).");
+            Swal.fire('Info', "Célula desmesclada.", 'info');
             return;
         }
-        return alert("Selecione mais de uma célula.");
+        return Swal.fire('Atenção', "Selecione mais de uma célula para mesclar.", 'warning');
     }
 
     masterData.merge = { r: rowSpan, c: colSpan };
@@ -599,7 +599,7 @@ function refazer() {
 }
 
 function salvar() {
-    if (typeof SPREADSHEET_ID === 'undefined') return alert("ID da planilha não definido.");
+    if (typeof SPREADSHEET_ID === 'undefined') return Swal.fire('Erro', "ID da planilha não definido.", 'error');
 
     const modal = new bootstrap.Modal(document.getElementById('modalSalvar'));
     document.getElementById('saveMessage').value = "Atualização de dados";
@@ -625,12 +625,12 @@ async function executarSalvar() {
         });
         const json = await res.json();
         if (json.success) {
-            alert("Salvo com sucesso!");
+            Swal.fire('Sucesso!', "Salvo com sucesso!", 'success');
         } else {
-            alert('Erro ao salvar: ' + (json.error || "Desconhecido"));
+            Swal.fire('Erro', 'Erro ao salvar: ' + (json.error || "Desconhecido"), 'error');
         }
     } catch (err) {
-        alert('Erro ao salvar: ' + err.message);
+        Swal.fire('Erro', 'Erro ao salvar: ' + err.message, 'error');
     }
 }
 
