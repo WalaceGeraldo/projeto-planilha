@@ -201,7 +201,7 @@
                 text: "Isso apagará a planilha para TODOS os usuários e não pode ser desfeito.",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Sim, excluir!',
+                confirmButtonText: 'Sim, excluir',
                 cancelButtonText: 'Cancelar',
                 confirmButtonColor: '#dc3545'
             });
