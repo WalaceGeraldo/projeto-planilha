@@ -9,6 +9,7 @@ body.auth-page {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    padding: 1rem;
 }
 
 .auth-card {
@@ -31,15 +32,21 @@ body.auth-page {
    Editor Styles
    ========================================= */
 .table-container { 
-    max-height: 500px; 
+    max-height: 70vh; /* Better for varying screen heights */
     overflow: auto; 
     border: 1px solid #ddd; 
     background: #fff; 
+    position: relative; /* Context for sticky headers if needed */
 }
 
 /* Estilizacao das Abas */
 .nav-tabs { 
     border-bottom: 2px solid #0d6efd; 
+    flex-wrap: nowrap; /* Prevent wrapping on mobile, allow scroll */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
 }
 
 .nav-link { 
@@ -50,6 +57,7 @@ body.auth-page {
     border-bottom: none;
     border-radius: 8px 8px 0 0;
     transition: all 0.2s;
+    white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -75,21 +83,25 @@ th {
     position: relative; 
     min-width: 50px; 
     background: #f8f9fa; 
+    user-select: none;
 }
 
 .resizer {
     position: absolute; 
     top: 0; 
     right: 0; 
-    width: 5px; 
+    width: 15px; /* Larger touch target for mobile */
     cursor: col-resize;
     user-select: none; 
     height: 100%; 
     z-index: 10;
+    opacity: 0; /* Hidden but clickable */
 }
 
 .resizer:hover, .resizing { 
+    opacity: 1;
     background-color: #0d6efd; 
+    width: 5px; /* Visual width */
     border-right: 2px solid #0d6efd; 
 }
 
@@ -99,8 +111,9 @@ th {
 }
 
 .cell-input {
-    cursor: cell; /* Mostra cruz branca estilo Excel */
+    cursor: cell; 
     user-select: none;
+     font-size: 14px; /* Prevent IOS zoom on focus */
 }
 
 .cell-input.editing {
@@ -117,4 +130,73 @@ th {
 .actions-container {
     display: none;
     margin-top: 1rem;
+}
+
+/* =========================================
+   Mobile Responsiveness
+   ========================================= */
+@media (max-width: 768px) {
+    /* Dashboard */
+    .dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .dashboard-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .dashboard-actions button, 
+    .dashboard-actions a {
+        width: 100%;
+        margin-right: 0 !important;
+    }
+
+    .search-input {
+        max-width: 100%;
+        margin-top: 1rem;
+    }
+    
+    .sheet-item {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    .sheet-item .btn-group {
+        margin-top: 0.5rem;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Editor */
+    #toolbar-container {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .toolbar-group {
+        display: flex;
+        gap: 2px;
+    }
+    
+    .search-input-small {
+        max-width: 100%;
+        order: 5; /* Move search to bottom of toolbar on mobile */
+        margin-top: 0.5rem;
+    }
+
+    .table-container { 
+        max-height: 60vh; 
+    }
+
+    /* Adjust modal sizing */
+    .modal-dialog {
+        margin: 0.5rem;
+    }
 }
