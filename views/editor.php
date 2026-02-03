@@ -11,9 +11,9 @@
     </script>
 </head>
 <body class="bg-light container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3><?php echo htmlspecialchars($meta['name']); ?></h3>
-        <div>
+    <div class="d-flex justify-content-between align-items-center mb-4 dashboard-header">
+        <h3 class="text-break"><?php echo htmlspecialchars($meta['name']); ?></h3>
+        <div class="dashboard-actions">
             <?php if (($_SESSION['role'] ?? 'viewer') === 'admin'): ?>
                 <button onclick="verHistorico()" class="btn btn-warning btn-sm me-2"> Histórico</button>
             <?php endif; ?>

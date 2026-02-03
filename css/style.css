@@ -31,27 +31,30 @@ body.auth-page {
 /* =========================================
    Editor Styles
    ========================================= */
-.table-container { 
-    max-height: 70vh; /* Better for varying screen heights */
-    overflow: auto; 
-    border: 1px solid #ddd; 
-    background: #fff; 
-    position: relative; /* Context for sticky headers if needed */
+.table-container {
+    max-height: 70vh;
+    /* Better for varying screen heights */
+    overflow: auto;
+    border: 1px solid #ddd;
+    background: #fff;
+    position: relative;
+    /* Context for sticky headers if needed */
 }
 
 /* Estilizacao das Abas */
-.nav-tabs { 
-    border-bottom: 2px solid #0d6efd; 
-    flex-wrap: nowrap; /* Prevent wrapping on mobile, allow scroll */
+.nav-tabs {
+    border-bottom: 2px solid #0d6efd;
+    flex-wrap: nowrap;
+    /* Prevent wrapping on mobile, allow scroll */
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
 
-.nav-link { 
-    background-color: #f1f3f5; 
-    color: #495057; 
+.nav-link {
+    background-color: #f1f3f5;
+    color: #495057;
     margin-right: 4px;
     border: 1px solid #dee2e6;
     border-bottom: none;
@@ -65,44 +68,48 @@ body.auth-page {
     color: #000;
 }
 
-.nav-link.active { 
-    background-color: #0d6efd; 
-    color: white; 
+.nav-link.active {
+    background-color: #0d6efd;
+    color: white;
     border-color: #0d6efd;
     font-weight: bold;
 }
 
-#loading { 
-    display: none; 
-    font-weight: bold; 
-    color: #0d6efd; 
+#loading {
+    display: none;
+    font-weight: bold;
+    color: #0d6efd;
 }
 
 /* Tabela Editor */
-th { 
-    position: relative; 
-    min-width: 50px; 
-    background: #f8f9fa; 
+th {
+    position: relative;
+    min-width: 50px;
+    background: #f8f9fa;
     user-select: none;
 }
 
 .resizer {
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    width: 15px; /* Larger touch target for mobile */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15px;
+    /* Larger touch target for mobile */
     cursor: col-resize;
-    user-select: none; 
-    height: 100%; 
+    user-select: none;
+    height: 100%;
     z-index: 10;
-    opacity: 0; /* Hidden but clickable */
+    opacity: 0;
+    /* Hidden but clickable */
 }
 
-.resizer:hover, .resizing { 
+.resizer:hover,
+.resizing {
     opacity: 1;
-    background-color: #0d6efd; 
-    width: 5px; /* Visual width */
-    border-right: 2px solid #0d6efd; 
+    background-color: #0d6efd;
+    width: 5px;
+    /* Visual width */
+    border-right: 2px solid #0d6efd;
 }
 
 .selected-cell {
@@ -111,9 +118,10 @@ th {
 }
 
 .cell-input {
-    cursor: cell; 
+    cursor: cell;
     user-select: none;
-     font-size: 14px; /* Prevent IOS zoom on focus */
+    font-size: 14px;
+    /* Prevent IOS zoom on focus */
 }
 
 .cell-input.editing {
@@ -136,21 +144,30 @@ th {
    Mobile Responsiveness
    ========================================= */
 @media (max-width: 768px) {
-    /* Dashboard */
+
+    /* Dashboard & Editor Header */
     .dashboard-header {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
     }
-    
+
+    .dashboard-header h3,
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+        /* Reduce font size on mobile */
+    }
+
     .dashboard-actions {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
+        /* Allow wrapping */
+        justify-content: center;
         gap: 0.5rem;
         width: 100%;
     }
 
-    .dashboard-actions button, 
+    .dashboard-actions button,
     .dashboard-actions a {
         width: 100%;
         margin-right: 0 !important;
@@ -160,12 +177,12 @@ th {
         max-width: 100%;
         margin-top: 1rem;
     }
-    
+
     .sheet-item {
         flex-direction: column;
         align-items: flex-start !important;
     }
-    
+
     .sheet-item .btn-group {
         margin-top: 0.5rem;
         width: 100%;
@@ -184,15 +201,16 @@ th {
         display: flex;
         gap: 2px;
     }
-    
+
     .search-input-small {
         max-width: 100%;
-        order: 5; /* Move search to bottom of toolbar on mobile */
+        order: 5;
+        /* Move search to bottom of toolbar on mobile */
         margin-top: 0.5rem;
     }
 
-    .table-container { 
-        max-height: 60vh; 
+    .table-container {
+        max-height: 60vh;
     }
 
     /* Adjust modal sizing */
