@@ -6,7 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-<body class="bg-light container py-5">
+<body class="bg-light py-5">
+    <div class="container" style="max-width: 1000px;">
     <div class="d-flex justify-content-between align-items-center mb-4 dashboard-header">
         <h1>Painel de Controle</h1>
         <div class="dashboard-actions">
@@ -93,7 +94,7 @@
                     <a href="editor.php?id=<?php echo $s['id']; ?>" class="d-block text-decoration-none text-dark flex-grow-1">
                         <h5 class="mb-1"><?php echo htmlspecialchars($s['name']); ?></h5>
                         <small class="text-muted">
-                            Por: <strong><?php echo htmlspecialchars(get_username_by_id($s['owner_id'])); ?></strong> | 
+                            Por: <strong><?php echo htmlspecialchars($s['owner_name'] ?? 'Desconhecido'); ?></strong> | 
                             Criado em: <?php echo $s['created_at']; ?>
                         </small>
                     </a>
@@ -514,5 +515,6 @@
             });
         }
     </script>
+    </div> <!-- End .container -->
 </body>
 </html>

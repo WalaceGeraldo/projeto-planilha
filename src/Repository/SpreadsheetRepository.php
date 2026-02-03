@@ -13,7 +13,13 @@ class SpreadsheetRepository {
     }
 
     public function getAll() {
-        $stmt = $this->db->query("SELECT id, name, owner_id, created_at, updated_at FROM spreadsheets ORDER BY updated_at DESC");
+        $sql = "
+            SELECT s.id, s.name, s.owner_id, s.created_at, s.updated_at, u.username as owner_name
+            FROM spreadsheets s
+            LEFT JOIN users u ON s.owner_id = u.id
+            ORDER BY s.updated_at DESC
+        ";
+        $stmt = $this->db->query($sql);
         return $stmt->fetchAll();
     }
 
