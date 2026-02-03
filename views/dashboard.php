@@ -7,9 +7,9 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body class="bg-light container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 dashboard-header">
         <h1>Painel de Controle</h1>
-        <div>
+        <div class="dashboard-actions">
             <?php if (($_SESSION['role'] ?? 'viewer') === 'admin'): ?>
                 <button onclick="exportarSelecionados()" class="btn btn-outline-success me-2">Exportar</button>
                 <button onclick="abrirHistoricoGlobal()" class="btn btn-info me-2 text-white">Histórico</button>

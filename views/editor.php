@@ -42,41 +42,43 @@
     <!-- Upload Removido, agora carrega via ID -->
     <div id="loading" class="mt-2 text-center">Carregando dados...</div>
 
-    <div class="my-3 d-flex gap-2 align-items-center">
+    <div class="my-3 d-flex align-items-center" id="toolbar-container">
         <!-- Barra de Ferramentas -->
-        <div class="btn-group" role="group">
+        <div class="toolbar-group btn-group" role="group">
             <button type="button" class="btn btn-outline-secondary fw-bold" onclick="aplicarEstilo('bold')" title="Negrito">B</button>
             <button type="button" class="btn btn-outline-secondary fst-italic" onclick="aplicarEstilo('italic')" title="Itálico">I</button>
             <button type="button" class="btn btn-outline-secondary text-decoration-underline" onclick="aplicarEstilo('underline')" title="Sublinhado">U</button>
             <button type="button" class="btn btn-outline-secondary" onclick="mesclarCelulas()" title="Mesclar Células">🔗</button>
         </div>
         
-        <div class="vr mx-2"></div>
+        <div class="vr mx-2 d-none d-md-block"></div>
 
-        <div class="btn-group" role="group">
+        <div class="toolbar-group btn-group" role="group">
             <button type="button" class="btn btn-outline-secondary" onclick="desfazer()" title="Desfazer">↩️</button>
             <button type="button" class="btn btn-outline-secondary" onclick="refazer()" title="Refazer">↪️</button>
         </div>
         
-        <div class="d-flex align-items-center border rounded px-2">
-            <span class="me-2 text-muted small">Cor:</span>
-            <input type="color" id="corTexto" class="form-control form-control-color border-0 p-0" value="#000000" onchange="aplicarEstilo('color', this.value)" title="Cor do Texto">
+        <div class="toolbar-group d-flex gap-2">
+            <div class="d-flex align-items-center border rounded px-2">
+                <span class="me-2 text-muted small">Cor:</span>
+                <input type="color" id="corTexto" class="form-control form-control-color border-0 p-0" value="#000000" onchange="aplicarEstilo('color', this.value)" title="Cor do Texto">
+            </div>
+
+            <div class="d-flex align-items-center border rounded px-2">
+                <span class="me-2 text-muted small">Fundo:</span>
+                <input type="color" id="corFundo" class="form-control form-control-color border-0 p-0" value="#ffffff" onchange="aplicarEstilo('background', this.value)" title="Cor de Fundo">
+            </div>
         </div>
 
-        <div class="d-flex align-items-center border rounded px-2">
-            <span class="me-2 text-muted small">Fundo:</span>
-            <input type="color" id="corFundo" class="form-control form-control-color border-0 p-0" value="#ffffff" onchange="aplicarEstilo('background', this.value)" title="Cor de Fundo">
-        </div>
+        <div class="vr mx-2 d-none d-md-block"></div>
 
-        <div class="vr mx-2"></div>
-
-        <div class="btn-group" role="group">
+        <div class="toolbar-group btn-group" role="group">
             <button type="button" class="btn btn-outline-secondary" onclick="alterarZoom(-0.1)" title="Diminuir Zoom">➖</button>
             <button type="button" class="btn btn-outline-secondary" onclick="resetarZoom()" title="Resetar Zoom">🔍</button>
             <button type="button" class="btn btn-outline-secondary" onclick="alterarZoom(0.1)" title="Aumentar Zoom">➕</button>
         </div>
 
-        <div class="vr mx-2"></div>
+        <div class="vr mx-2 d-none d-md-block"></div>
 
         <input type="text" id="termoPesquisa" class="form-control search-input-small" placeholder="Pesquisar nesta aba..." onkeyup="pesquisar()">
     </div>
