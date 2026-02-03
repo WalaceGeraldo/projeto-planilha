@@ -147,45 +147,6 @@
         </div>
     </div>
 
-    <!-- Modal Nova Aba -->
-    <div class="modal fade" id="modalNovaAba" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Nova Aba</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <label for="nomeNovaAba" class="form-label">Nome da Aba:</label>
-                    <input type="text" id="nomeNovaAba" class="form-control" placeholder="Ex: Janeiro">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success" onclick="confirmarNovaAba()">Criar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal Renomear Aba -->
-    <div class="modal fade" id="modalRenomearAba" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Renomear Aba</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="nomeAbaAntigo">
-                    <label for="novoNomeAba" class="form-label">Novo Nome:</label>
-                    <input type="text" id="novoNomeAba" class="form-control" placeholder="Novo nome da aba">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="confirmarRenomearAba()">Salvar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>

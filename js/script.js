@@ -66,91 +66,64 @@ function renderizarAbas(nomes) {
     container.innerHTML = html;
 }
 
-function renomearAba(nomeAntigo) {
+async function renomearAba(nomeAntigo) {
     if (typeof USER_ROLE !== 'undefined' && USER_ROLE === 'viewer') return;
 
-    const modal = new bootstrap.Modal(document.getElementById('modalRenomearAba'));
-    document.getElementById('nomeAbaAntigo').value = nomeAntigo;
-    document.getElementById('novoNomeAba').value = nomeAntigo;
-    modal.show();
-    setTimeout(() => {
-        const input = document.getElementById('novoNomeAba');
-        input.focus();
-        input.select();
-    }, 500);
+    const { value: novoNome } = await Swal.fire({
+        title: 'Renomear Aba',
+        input: 'text',
+        inputValue: nomeAntigo,
+        showCancelButton: true,
+        inputValidator: (value) => {
+            if (!value.trim()) return 'O nome não pode ser vazio!';
+        }
+    });
+
+    if (novoNome && novoNome !== nomeAntigo) {
+        const abas = Object.keys(cacheGlobal);
+        if (abas.includes(novoNome)) {
+            Swal.fire('Atenção', "Já existe uma aba com este nome.", 'warning');
+            return;
+        }
+
+        cacheGlobal[novoNome] = cacheGlobal[nomeAntigo];
+        delete cacheGlobal[nomeAntigo];
+
+        if (stateColumnWidths[nomeAntigo]) {
+            stateColumnWidths[novoNome] = stateColumnWidths[nomeAntigo];
+            delete stateColumnWidths[nomeAntigo];
+        }
+
+        renderizarAbas(Object.keys(cacheGlobal));
+        abrirAba(novoNome);
+    }
 }
 
-function confirmarRenomearAba() {
-    const nomeAntigo = document.getElementById('nomeAbaAntigo').value;
-    const novoNome = document.getElementById('novoNomeAba').value.trim();
+async function adicionarAba() {
+    const { value: nome } = await Swal.fire({
+        title: 'Nova Aba',
+        input: 'text',
+        inputLabel: 'Nome da nova aba',
+        inputPlaceholder: 'Ex: Janeiro',
+        showCancelButton: true,
+        inputValidator: (value) => {
+            if (!value.trim()) return 'Digite um nome para a aba!';
+        }
+    });
 
-    if (!novoNome || novoNome === nomeAntigo) return;
+    if (nome) {
+        const nomeTrim = nome.trim();
+        const abasExistentes = Object.keys(cacheGlobal);
+        if (abasExistentes.includes(nomeTrim)) {
+            Swal.fire('Atenção', "Já existe uma aba com este nome.", 'warning');
+            return;
+        }
 
-    const abas = Object.keys(cacheGlobal);
-    if (abas.includes(novoNome)) {
-        Swal.fire('Atenção', "Já existe uma aba com este nome.", 'warning');
-        return;
+        cacheGlobal[nomeTrim] = gerarGradeVazia();
+        renderizarAbas([...abasExistentes, nomeTrim]);
+        abrirAba(nomeTrim);
     }
-
-    const modalEl = document.getElementById('modalRenomearAba');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    modal.hide();
-
-    cacheGlobal[novoNome] = cacheGlobal[nomeAntigo];
-    delete cacheGlobal[nomeAntigo];
-
-    if (stateColumnWidths[nomeAntigo]) {
-        stateColumnWidths[novoNome] = stateColumnWidths[nomeAntigo];
-        delete stateColumnWidths[nomeAntigo];
-    }
-
-    renderizarAbas(Object.keys(cacheGlobal));
-    abrirAba(novoNome);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const inputRenomear = document.getElementById('novoNomeAba');
-    if (inputRenomear) {
-        inputRenomear.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') confirmarRenomearAba();
-        });
-    }
-});
-
-function adicionarAba() {
-    const modal = new bootstrap.Modal(document.getElementById('modalNovaAba'));
-    document.getElementById('nomeNovaAba').value = "";
-    modal.show();
-    setTimeout(() => document.getElementById('nomeNovaAba').focus(), 500);
-}
-
-function confirmarNovaAba() {
-    const nome = document.getElementById('nomeNovaAba').value.trim();
-    if (!nome) return Swal.fire('Atenção', "Digite um nome para a aba.", 'warning');
-
-    const abasExistentes = Object.keys(cacheGlobal);
-    if (abasExistentes.includes(nome)) {
-        Swal.fire('Atenção', "Já existe uma aba com este nome.", 'warning');
-        return;
-    }
-
-    const modalEl = document.getElementById('modalNovaAba');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    modal.hide();
-
-    cacheGlobal[nome] = gerarGradeVazia();
-    renderizarAbas([...abasExistentes, nome]);
-    abrirAba(nome);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const inputNovaAba = document.getElementById('nomeNovaAba');
-    if (inputNovaAba) {
-        inputNovaAba.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') confirmarNovaAba();
-        });
-    }
-});
 
 function gerarGradeVazia() {
     const dados = {};
