@@ -161,49 +161,80 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        async function renomear(id, nomeAtual) {
-            const novoNome = prompt("Novo nome para a planilha:", nomeAtual);
-            if (!novoNome || novoNome === nomeAtual) return;
+        // Configuração padrão para o tema do SweetAlert
+        const swalConfig = {
+            confirmButtonColor: '#0d6efd',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Sim',
+            cancelButtonText: 'Cancelar'
+        };
 
-            try {
-                const res = await fetch('process.php?action=rename', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id, name: novoNome })
-                });
-                const json = await res.json();
-                if (res.ok) {
-                    window.location.reload();
-                } else {
-                    alert('Erro: ' + (json.error || 'Falha ao renomear'));
-                }
-            } catch (e) { alert("Erro de conexão"); }
+        async function renomear(id, nomeAtual) {
+            const { value: novoNome } = await Swal.fire({
+                title: 'Renomear Planilha',
+                input: 'text',
+                inputValue: nomeAtual,
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) return 'Você precisa digitar um nome!'
+                },
+                ...swalConfig
+            });
+
+            if (novoNome && novoNome !== nomeAtual) {
+                try {
+                    const res = await fetch('process.php?action=rename', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id, name: novoNome })
+                    });
+                    const json = await res.json();
+                    if (res.ok) {
+                        await Swal.fire('Sucesso!', 'Planilha renomeada.', 'success');
+                        window.location.reload();
+                    } else {
+                        Swal.fire('Erro', json.error || 'Falha ao renomear', 'error');
+                    }
+                } catch (e) { Swal.fire('Erro', 'Erro de conexão', 'error'); }
+            }
         }
 
         async function excluir(id) {
-            if (!confirm("Tem certeza? Isso apagará a planilha para TODOS os usuários e não pode ser desfeito.")) return;
-            
-            try {
-                const res = await fetch('process.php?action=delete', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id })
-                });
-                const json = await res.json();
-                if (res.ok) {
-                    window.location.reload();
-                } else {
-                    alert('Erro: ' + (json.error || 'Falha ao excluir'));
-                }
-            } catch (e) { alert("Erro de conexão"); }
+            const result = await Swal.fire({
+                title: 'Tem certeza?',
+                text: "Isso apagará a planilha para TODOS os usuários e não pode ser desfeito.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#dc3545'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    const res = await fetch('process.php?action=delete', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id })
+                    });
+                    const json = await res.json();
+                    if (res.ok) {
+                        await Swal.fire('Excluído!', 'A planilha foi removida.', 'success');
+                        window.location.reload();
+                    } else {
+                        Swal.fire('Erro', json.error || 'Falha ao excluir', 'error');
+                    }
+                } catch (e) { Swal.fire('Erro', 'Erro de conexão', 'error'); }
+            }
         }
 
         async function importarPlanilha() {
             const fileInput = document.getElementById('arquivoImportar');
             const file = fileInput.files[0];
             
-            if (!file) return alert('Por favor, selecione um arquivo primeiro.');
+            if (!file) return Swal.fire('Atenção', 'Por favor, selecione um arquivo primeiro.', 'warning');
             
             const formData = new FormData();
             formData.append('file', file);
@@ -241,11 +272,10 @@
                 });
                 
                 modal.show();
-                
                 fileInput.value = ''; 
                 
             } catch (err) {
-                alert('Erro ao carregar planilha: ' + err.message);
+                Swal.fire('Erro', 'Erro ao carregar planilha: ' + err.message, 'error');
             }
         }
         
@@ -256,7 +286,7 @@
             const checked = document.querySelectorAll('.sheet-check:checked');
             const selectedSheets = Array.from(checked).map(c => c.value);
             
-            if (selectedSheets.length === 0) return alert("Selecione pelo menos uma aba.");
+            if (selectedSheets.length === 0) return Swal.fire('Atenção', "Selecione pelo menos uma aba.", 'warning');
             
             try {
                 const res = await fetch('process.php?action=confirm_import', {
@@ -273,18 +303,19 @@
                 const data = await res.json();
                 
                 if (data.success) {
+                    await Swal.fire('Sucesso!', 'Planilha importada.', 'success');
                     location.reload();
                 } else {
                     throw new Error(data.error || "Erro ao importar.");
                 }
             } catch (err) {
-                 alert('Erro ao confirmar importação: ' + err.message);
+                 Swal.fire('Erro', 'Erro ao confirmar importação: ' + err.message, 'error');
             }
         }
 
         async function criarPlanilha() {
             const nome = document.getElementById('novoNome').value;
-            if (!nome) return alert('Digite um nome.');
+            if (!nome) return Swal.fire('Atenção', 'Digite um nome para a planilha.', 'warning');
 
             try {
                 const res = await fetch('process.php?action=create', {
@@ -297,10 +328,10 @@
                 if (res.ok) {
                     window.location.href = `editor.php?id=${json.id}`;
                 } else {
-                    alert('Erro: ' + (json.error || 'Erro desconhecido'));
+                    Swal.fire('Erro', json.error || 'Erro desconhecido', 'error');
                 }
             } catch (e) {
-                alert('Erro de conexão');
+                Swal.fire('Erro', 'Erro de conexão', 'error');
             }
         }
 
@@ -332,7 +363,7 @@
                         </tr>
                     `).join('');
                 } else {
-                    alert("Erro ao carregar usuários: " + (data.error || ""));
+                    Swal.fire('Erro', "Erro ao carregar usuários: " + (data.error || ""), 'error');
                 }
             } catch (e) { console.error(e); }
         }
@@ -359,8 +390,8 @@
             const pass = document.getElementById('userPass').value;
             const role = document.getElementById('userRole').value;
             
-            if (!user) return alert("Preencha o usuário.");
-            if (!id && !pass) return alert("Senha é obrigatória para novos usuários.");
+            if (!user) return Swal.fire('Atenção', "Preencha o usuário.", 'warning');
+            if (!id && !pass) return Swal.fire('Atenção', "Senha é obrigatória para novos usuários.", 'warning');
 
             const action = id ? 'update_user' : 'create_user';
             
@@ -373,17 +404,27 @@
                 const json = await res.json();
                 
                 if (json.success) {
-                    alert("Salvo com sucesso!");
+                    Swal.fire('Sucesso!', "Usuário salvo com sucesso!", 'success');
                     limparFormUser();
                     carregarUsuarios();
                 } else {
-                    alert("Erro: " + json.error);
+                    Swal.fire('Erro', json.error, 'error');
                 }
-            } catch (e) { alert("Erro de conexão"); }
+            } catch (e) { Swal.fire('Erro', 'Erro de conexão', 'error'); }
         }
 
         async function excluirUsuario(id) {
-            if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
+            const result = await Swal.fire({
+                title: 'Excluir Usuário?',
+                text: "Essa ação não pode ser desfeita.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, excluir',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#dc3545'
+            });
+
+            if (!result.isConfirmed) return;
             
             try {
                 const res = await fetch(`auth.php?action=delete_user`, {
@@ -393,14 +434,17 @@
                 });
                 const json = await res.json();
                 
-                if (json.success) carregarUsuarios();
-                else alert("Erro: " + json.error);
-            } catch (e) { alert("Erro de conexão"); }
+                if (json.success) {
+                    Swal.fire('Deletado!', 'Usuário removido.', 'success');
+                    carregarUsuarios();
+                }
+                else Swal.fire('Erro', json.error, 'error');
+            } catch (e) { Swal.fire('Erro', 'Erro de conexão', 'error'); }
         }
 
         async function exportarSelecionados() {
             const checked = document.querySelectorAll('.sheet-select:checked');
-            if (checked.length === 0) return alert("Selecione pelo menos uma planilha.");
+            if (checked.length === 0) return Swal.fire('Atenção', "Selecione pelo menos uma planilha.", 'info');
             
             const ids = Array.from(checked).map(el => el.value);
             
