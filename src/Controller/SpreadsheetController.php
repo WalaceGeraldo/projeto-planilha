@@ -155,6 +155,6 @@ class SpreadsheetController {
         header('Content-Length: ' . filesize($zipFile));
         readfile($zipFile);
         @unlink($zipFile);
-        exit; // Binary file output, exit directly
+        exit;
     }
 }

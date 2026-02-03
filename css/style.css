@@ -1,8 +1,3 @@
-/* =========================================
-   Global Styles
-   ========================================= */
-
-/* Auth Pages (Login / Register) */
 body.auth-page {
     background-color: #f8f9fa;
     display: flex;
@@ -17,9 +12,6 @@ body.auth-page {
     max-width: 400px;
 }
 
-/* =========================================
-   Dashboard Styles
-   ========================================= */
 .search-input {
     max-width: 300px;
 }
@@ -28,24 +20,17 @@ body.auth-page {
     display: none;
 }
 
-/* =========================================
-   Editor Styles
-   ========================================= */
 .table-container {
     max-height: 70vh;
-    /* Better for varying screen heights */
     overflow: auto;
     border: 1px solid #ddd;
     background: #fff;
     position: relative;
-    /* Context for sticky headers if needed */
 }
 
-/* Estilizacao das Abas */
 .nav-tabs {
     border-bottom: 2px solid #0d6efd;
     flex-wrap: nowrap;
-    /* Prevent wrapping on mobile, allow scroll */
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
@@ -81,7 +66,6 @@ body.auth-page {
     color: #0d6efd;
 }
 
-/* Tabela Editor */
 th {
     position: relative;
     min-width: 50px;
@@ -94,13 +78,11 @@ th {
     top: 0;
     right: 0;
     width: 15px;
-    /* Larger touch target for mobile */
     cursor: col-resize;
     user-select: none;
     height: 100%;
     z-index: 10;
     opacity: 0;
-    /* Hidden but clickable */
 }
 
 .resizer:hover,
@@ -108,7 +90,6 @@ th {
     opacity: 1;
     background-color: #0d6efd;
     width: 5px;
-    /* Visual width */
     border-right: 2px solid #0d6efd;
 }
 
@@ -121,7 +102,6 @@ th {
     cursor: cell;
     user-select: none;
     font-size: 14px;
-    /* Prevent IOS zoom on focus */
 }
 
 .cell-input.editing {
@@ -140,12 +120,8 @@ th {
     margin-top: 1rem;
 }
 
-/* =========================================
-   Mobile Responsiveness
-   ========================================= */
 @media (max-width: 768px) {
 
-    /* Dashboard & Editor Header */
     .dashboard-header {
         flex-direction: column;
         gap: 1rem;
@@ -155,13 +131,11 @@ th {
     .dashboard-header h3,
     .dashboard-header h1 {
         font-size: 1.5rem;
-        /* Reduce font size on mobile */
     }
 
     .dashboard-actions {
         display: flex;
         flex-wrap: wrap;
-        /* Allow wrapping */
         justify-content: center;
         gap: 0.5rem;
         width: 100%;
@@ -190,7 +164,6 @@ th {
         justify-content: space-between;
     }
 
-    /* Editor */
     #toolbar-container {
         flex-wrap: wrap;
         gap: 0.5rem;
@@ -205,7 +178,6 @@ th {
     .search-input-small {
         max-width: 100%;
         order: 5;
-        /* Move search to bottom of toolbar on mobile */
         margin-top: 0.5rem;
     }
 
@@ -213,7 +185,6 @@ th {
         max-height: 60vh;
     }
 
-    /* Adjust modal sizing */
     .modal-dialog {
         margin: 0.5rem;
     }

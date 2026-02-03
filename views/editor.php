@@ -22,7 +22,6 @@
         </div>
     </div>
 
-    <!-- Modal Histórico -->
     <div class="modal fade" id="historyModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -39,11 +38,9 @@
         </div>
     </div>
 
-    <!-- Upload Removido, agora carrega via ID -->
     <div id="loading" class="mt-2 text-center">Carregando dados...</div>
 
     <div class="my-3 d-flex align-items-center" id="toolbar-container">
-        <!-- Barra de Ferramentas -->
         <div class="toolbar-group btn-group" role="group">
             <button type="button" class="btn btn-outline-secondary fw-bold" onclick="aplicarEstilo('bold')" title="Negrito">B</button>
             <button type="button" class="btn btn-outline-secondary fst-italic" onclick="aplicarEstilo('italic')" title="Itálico">I</button>
@@ -86,7 +83,6 @@
     <ul class="nav nav-tabs" id="abasPlanilha" role="tablist"></ul>
     
     <div id="areaEdicao" class="table-container p-2">
-        <!-- Tabela será renderizada aqui -->
     </div>
 
     <div id="acoes" class="actions-container">
@@ -128,7 +124,6 @@
         }
     </script>
     
-    <!-- Modal Salvar -->
     <div class="modal fade" id="modalSalvar" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

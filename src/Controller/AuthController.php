@@ -23,7 +23,6 @@ class AuthController {
                     return $this->logout();
                 case 'check':
                     return $this->check();
-                // Admin actions
                 case 'list_users':
                 case 'create_user':
                 case 'update_user':
@@ -85,7 +84,6 @@ class AuthController {
 
         if ($action === 'list_users') {
             $users = $this->userRepo->getAll();
-            // remove passwords
             return ['users' => array_map(function($u) { unset($u['password']); return $u; }, $users)];
         }
 

@@ -4,19 +4,15 @@ use Dotenv\Dotenv;
 use App\Config\Database;
 
 try {
-    // Carregar .env
     $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->safeLoad();
 
-    // Carregar config
     require_once __DIR__ . '/includes/config.php';
 
-    // Conectar
     $db = Database::getInstance()->getConnection();
 
     echo "<h1>Instalação do Banco de Dados</h1>";
 
-    // 1. Tabela Users
     $sqlUsers = "
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
@@ -29,7 +25,6 @@ try {
     $db->exec($sqlUsers);
     echo "<p>✅ Tabela 'users' verificada/criada.</p>";
 
-    // 2. Tabela Spreadsheets
     $sqlSheets = "
         CREATE TABLE IF NOT EXISTS spreadsheets (
             id VARCHAR(50) PRIMARY KEY,
@@ -43,7 +38,6 @@ try {
     $db->exec($sqlSheets);
     echo "<p>✅ Tabela 'spreadsheets' verificada/criada.</p>";
 
-    // 3. Tabela History
     $sqlHistory = "
         CREATE TABLE IF NOT EXISTS spreadsheet_history (
             id SERIAL PRIMARY KEY,
@@ -57,7 +51,6 @@ try {
     $db->exec($sqlHistory);
     echo "<p>✅ Tabela 'spreadsheet_history' verificada/criada.</p>";
 
-    // 4. Criar Admin padrão se não existir
     $stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE username = 'admin'");
     $stmt->execute();
     if ($stmt->fetchColumn() == 0) {

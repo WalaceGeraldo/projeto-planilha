@@ -19,7 +19,6 @@
         </div>
     </div>
 
-    <!-- Modal Gestão de Usuários -->
     <div class="modal fade" id="usersModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -61,7 +60,6 @@
         </div>
     </div>
 
-    <!-- Ações de Criação (Só para Admin/Editor) -->
     <?php if (($_SESSION['role'] ?? 'viewer') !== 'viewer'): ?>
     <div class="card p-4 shadow-sm mb-4">
         <h5>Nova Planilha</h5>
@@ -78,7 +76,6 @@
     </div>
     <?php endif; ?>
 
-    <!-- Barra de Pesquisa -->
     <div class="mb-3">
         <input type="text" id="pesquisaPlanilha" class="form-control search-input" placeholder="Pesquisar planilha..." onkeyup="filtrarPlanilhas()">
     </div>
@@ -117,7 +114,6 @@
         <?php endif; ?>
     </div>
 
-    <!-- Modal Import Selection -->
     <div class="modal fade" id="modalImportSelection" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -131,7 +127,6 @@
                         <input type="hidden" id="importTempFile">
                         <input type="hidden" id="importOriginalName">
                         <div id="importSheetsList" class="list-group">
-                            <!-- Checkboxes injected by JS -->
                         </div>
                     </form>
                 </div>
@@ -143,7 +138,6 @@
         </div>
     </div>
 
-    <!-- Modal Global History -->
     <div class="modal fade" id="modalGlobalHistory" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -163,7 +157,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Configuração padrão para o tema do SweetAlert
         const swalConfig = {
             confirmButtonColor: '#0d6efd',
             cancelButtonColor: '#dc3545',

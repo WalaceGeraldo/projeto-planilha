@@ -64,7 +64,6 @@ class SpreadsheetRepository {
     }
 
     public function delete($id) {
-        // FK constraints often handled by DB, but manual cleanup ensures no orphans just in case
         $this->db->prepare("DELETE FROM spreadsheet_history WHERE spreadsheet_id = :id")->execute(['id' => $id]);
         $stmt = $this->db->prepare("DELETE FROM spreadsheets WHERE id = :id");
         $stmt->execute(['id' => $id]);
@@ -76,7 +75,7 @@ class SpreadsheetRepository {
         $stmt->execute([
             'sid' => $spreadsheetId,
             'uid' => $userId,
-            'action' => substr($action, 0, 50), // Garantir que não estoure o limite
+            'action' => substr($action, 0, 50),
             'details' => $details
         ]);
     }
